@@ -11,7 +11,7 @@ var allUrl = [], allData = [], finalData = [];
   await page.goto(url, { timeout: 0 });
   const scrapingData1 = await page.evaluate(() => {
     var data = [], arr = [];
-    const item = document.querySelectorAll("div#header");
+    const item = document.querySelectorAll("table:nth-of-type(12) div#header");
     for (let i = 0; i < item.length; i++) {
       let urlText = item[i].getAttribute('onClick'), link = "https://www.zabihah.com", ok = 0;
       for(let _j=0; _j<urlText.length; _j++){
@@ -73,12 +73,14 @@ var allUrl = [], allData = [], finalData = [];
       // -------- Time table From Sunday  ----------
       var times = document.querySelectorAll("table[cellpadding='3'] div.microLink");
       let _j = 7, hours = "";
-      for(let i=0; i<7; i++){
+      for(let i=0; i<7 && i<times.length; i++){
         if(hours.length !== 0) hours += " | ";
-        if(times[i].textContent != "CLOSE"){
-          hours += times[i].textContent+"-"+ times[_j++].textContent;
-        } 
-        else hours += "CLOSE";
+        if(times[i].textContent == "OPEN 24 HRS") hours += "OPEN 24 HRS";
+        else if(times[i].textContent == "CLOSE") hours += "CLOSE";
+        else{
+          hours += times[i].textContent;
+          if(times[_j]) hours += "-"+ times[_j++].textContent;
+        }
       }
       //------- all quick-facts ------
       let quickFactsBtns = document.querySelectorAll("td td td div.midLink[f]");
@@ -101,6 +103,9 @@ var allUrl = [], allData = [], finalData = [];
     });
     finalData.push({...allData[_i], ...scrapingData2});
   }
-  console.log(finalData);
+  // console.log(finalData);
+  const parser = new Parser();
+  const csv = parser.parse(finalData);
+  fs.writeFileSync("data/Restaurants-Data-Fairfax&Loudoun.csv", csv);
   await browser.close();
 })();
