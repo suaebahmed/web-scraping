@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const { Parser } = require("json2csv");
 const fs = require("fs");
 //------- every time (change baseURL and file name) ------
-var baseURL = "https://www.zabihah.com/sub/POQcsgnrDi?t=r";
+var baseURL = "https://www.zabihah.com/sub/POQcsgnrDi?t=m";
 var allUrl = [], allData = [], finalData = [];
 
 (async () => {
@@ -41,7 +41,7 @@ var allUrl = [], allData = [], finalData = [];
         if (j + 1 != el.length) ss += ", ";
       }
       data.push({
-        'restaurants name': name,
+        'markets name': name,
         origin: ss,
         location,
         src,
@@ -113,6 +113,6 @@ var allUrl = [], allData = [], finalData = [];
   const parser = new Parser();
   const csv = parser.parse(finalData);
   //--------------- change file name every time  ---------------------
-  fs.writeFileSync("data/Restaurants-Data-WesternVirginia.csv", csv); 
+  fs.writeFileSync("data/Markets-Data-WesternVirginia.csv", csv); 
   await browser.close();
 })();

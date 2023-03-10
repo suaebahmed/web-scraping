@@ -1,8 +1,8 @@
 const puppeteer = require("puppeteer");
 const { Parser } = require("json2csv");
 const fs = require("fs");
-//------- every time (change baseURL and file name) ------
-var baseURL = "https://www.zabihah.com/sub/POQcsgnrDi?t=r";
+//----- every time (change baseURL and file name) -------
+var baseURL = "https://www.zabihah.com/sub/MeLul8AVsJ?t=c";
 var allUrl = [], allData = [], finalData = [];
 
 (async () => {
@@ -12,7 +12,8 @@ var allUrl = [], allData = [], finalData = [];
   await page.goto(baseURL, { timeout: 0 });
   const scrapingData1 = await page.evaluate(() => {
     var data = [], arr = [];
-    const item = document.querySelectorAll("table:nth-of-type(12) div#header");
+    //---------------maybe change the CSSselector ---------------------
+    const item = document.querySelectorAll("table:nth-of-type(11) div#header");
     for (let i = 0; i < item.length; i++) {
       let urlText = item[i].getAttribute('onClick'), link = "https://www.zabihah.com", ok = 0;
       for(let _j=0; _j<urlText.length; _j++){
@@ -41,7 +42,7 @@ var allUrl = [], allData = [], finalData = [];
         if (j + 1 != el.length) ss += ", ";
       }
       data.push({
-        'restaurants name': name,
+        'caterers name': name,
         origin: ss,
         location,
         src,
@@ -112,7 +113,7 @@ var allUrl = [], allData = [], finalData = [];
   // console.log(finalData);
   const parser = new Parser();
   const csv = parser.parse(finalData);
-  //--------------- change file name every time  ---------------------
-  fs.writeFileSync("data/Restaurants-Data-WesternVirginia.csv", csv); 
+  //----------- change file name every time  -------------
+  fs.writeFileSync("data/Caterers-Data-Richmond.csv", csv); 
   await browser.close();
 })();
