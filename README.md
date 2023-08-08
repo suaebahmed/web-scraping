@@ -1,7 +1,17 @@
 # ... Web Scraping ...
 
-## I love puppeteer. It is similar to web scraping with vanilla js & xmlhttprequest
+## Installation
+```
+  npm install
+```
 
-## Also love for web scraper and CSSselectorHub chrome extension
+### Configure the URL info in app.js and after run the file
+```
+  node app.js
+```
 
-## cheerio & axios waste my day!
+#### I love puppeteer. It is similar to web scraping with vanilla js & xmlhttprequest
+
+#### Also love for web scraper and CSSselectorHub chrome extension
+
+#### cheerio & axios waste my day!
